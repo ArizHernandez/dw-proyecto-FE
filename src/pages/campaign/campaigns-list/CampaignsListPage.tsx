@@ -45,21 +45,25 @@ export const CampaignsListPage = () => {
         </>
       )}
 
-      <div className="grid grid-cols-4 gap-3 mt-3">
-        {campaigns.map((campaign) => (
-          <CampaignCard
-            key={campaign.campaignid}
-            title={campaign.title}
-            description={campaign.description}
-            status={campaign.isvotingenabled}
-            onClick={() => console.log("click")}
-            onEdit={() => {
-              setIdCampaign(campaign.campaignid);
-              onOpen();
-            }}
-          />
-        ))}
-      </div>
+      {campaigns.length > 0 ? (
+        <div className="grid grid-cols-4 gap-3 mt-3">
+          {campaigns.map((campaign) => (
+            <CampaignCard
+              key={campaign.campaignid}
+              title={campaign.title}
+              description={campaign.description}
+              status={campaign.isvotingenabled}
+              onClick={() => console.log("click")}
+              onEdit={() => {
+                setIdCampaign(campaign.campaignid);
+                onOpen();
+              }}
+            />
+          ))}
+        </div>
+      ) : (
+        <p className="text-center text-3xl mt-3">No hay campañas cargadas</p>
+      )}
 
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>

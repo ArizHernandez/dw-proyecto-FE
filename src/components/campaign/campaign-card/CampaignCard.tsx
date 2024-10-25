@@ -58,9 +58,9 @@ export const CampaignCard = ({
         <CardBody className="overflow-visible py-2">
           <Image
             alt="Card background"
-            className="object-cover rounded-xl"
+            className="object-contain rounded-xl"
             src="https://pbc712.org/wp-content/uploads/2020/08/vote-for-blog.jpg"
-            width={270}
+            width="100%"
           />
         </CardBody>
       </Card>

@@ -1,4 +1,13 @@
+import { useState } from "react";
+
+import { Avatar, AvatarIcon } from "@nextui-org/avatar";
 import { Button } from "@nextui-org/button";
+import {
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+} from "@nextui-org/dropdown";
 import {
   Navbar,
   NavbarBrand,
@@ -6,12 +15,11 @@ import {
   NavbarItem,
   NavbarMenuToggle,
 } from "@nextui-org/navbar";
-import { useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
 export const Root = () => {
-  const { isLogged, logout } = useAuth();
+  const { isLogged, logout, user } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navigate = useNavigate();
@@ -52,12 +60,35 @@ export const Root = () => {
               </NavbarItem>
             </NavbarContent>
 
-            <NavbarContent justify="end">
-              <NavbarItem>
-                <Button onClick={handleLogout} color="primary" variant="flat">
-                  Cerrar sesión
-                </Button>
-              </NavbarItem>
+            <NavbarContent as="div" justify="end">
+              <Dropdown placement="bottom-end">
+                <DropdownTrigger>
+                  <Avatar
+                    isBordered
+                    as="button"
+                    icon={<AvatarIcon />}
+                    classNames={{
+                      base: "bg-gradient-to-br from-[#FFB457] to-[#FF705B]",
+                      icon: "text-black/80",
+                    }}
+                    color="secondary"
+                    size="sm"
+                  />
+                </DropdownTrigger>
+                <DropdownMenu aria-label="Profile Actions" variant="flat">
+                  <DropdownItem key="profile" className="h-14 gap-2">
+                    <p className="font-semibold">Signed in as</p>
+                    <p className="font-semibold">{user?.email}</p>
+                  </DropdownItem>
+                  <DropdownItem
+                    onClick={handleLogout}
+                    key="logout"
+                    color="danger"
+                  >
+                    Cerrar sesión
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
             </NavbarContent>
           </>
         ) : (

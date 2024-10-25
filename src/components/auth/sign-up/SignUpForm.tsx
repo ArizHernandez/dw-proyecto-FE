@@ -11,9 +11,9 @@ import { SignUpSchema } from "./utilities/form-validation";
 
 export const SignUpForm = () => {
   const { login } = useAuth();
-  
+
   const handleSubmit = async (values: SignUpFormPayload) => {
-    const { confirmPassword, ...rest } = values;
+    const { _confirmPassword, ...rest } = values;
 
     const payload: SignUpPayload = {
       ...rest,

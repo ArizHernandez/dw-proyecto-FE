@@ -8,7 +8,7 @@ export const SignUpSchema = Yup.object().shape({
   email: Yup.string()
     .email("Correo electrónico inválido")
     .required("El correo electrónico es requerido"),
-  dpi: Yup.string().required("El DPI es requerido"),
+  dpi: Yup.string().required("El DPI es requerido").length(13, "DPI inválido, debe tener 13 dígitos"),
   birthdate: Yup.string().required("La fecha de nacimiento es requerida"),
   password: Yup.string().required("La contraseña es requerida"),
   confirmPassword: Yup.string()

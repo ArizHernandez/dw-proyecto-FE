@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { getLocalTimeZone, now } from "@internationalized/date";
 import { Button } from "@nextui-org/button";
 import { Form, Formik } from "formik";

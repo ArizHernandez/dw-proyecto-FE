@@ -9,10 +9,12 @@ import { AppRoles } from "../../../helper/app-roles";
 import { useAuth } from "../../../hooks/useAuth";
 import { getCampaigns } from "../../../services/campaign";
 import { Campaign } from "../../../components/campaign/campaign-card/interfaces/campaign.interface";
+import { useNavigate } from "react-router-dom";
 
 export const CampaignsListPage = () => {
   const { user } = useAuth();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const navigate = useNavigate();
 
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [idCampaign, setIdCampaign] = useState<null | string>(null);
@@ -24,6 +26,8 @@ export const CampaignsListPage = () => {
   };
 
   const handleClose = (onClose: () => void, realodInfo: boolean) => {
+    setIdCampaign(null);
+
     if (realodInfo) {
       loadCampaigns();
     }
@@ -53,7 +57,7 @@ export const CampaignsListPage = () => {
               title={campaign.title}
               description={campaign.description}
               status={campaign.isvotingenabled}
-              onClick={() => console.log("click")}
+              onClick={() => navigate(`/campaign/${campaign.campaignid}`)}
               onEdit={() => {
                 setIdCampaign(campaign.campaignid);
                 onOpen();

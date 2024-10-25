@@ -3,30 +3,29 @@ import { ModalBody, ModalFooter, ModalHeader } from "@nextui-org/modal";
 import { Field, Form, Formik } from "formik";
 import { toast } from "react-toastify";
 
+import { useEffect } from "react";
+import { getCampaign } from "../../../services/campaign";
 import { InputField } from "../../../ui";
 import { TextAreaField } from "../../../ui/TextAreaField";
-import { CampaignPayload } from "./interface/campaign-form";
-import { CampaignSchema } from "./utilities/form-validation";
-import {
-  createCampaign,
-  getCampaign,
-  updateCampaign,
-} from "../../../services/campaign";
-import { useEffect } from "react";
+import { Candidate } from "../interfaces/candidate-by-campaign";
+import { CandidatePayload } from "./interface/campaign-form";
+import { CandidateSchema } from "./utilities/form-validation";
+import { createCandidate, updateCandidate } from "../../../services/candidates";
 
 type Params = {
   onClose: (reloadInformation: boolean) => void;
   idCampaign?: string | null;
+  candidate: Candidate | null;
 };
 
-export const CampaignForm = ({ onClose, idCampaign }: Params) => {
-  const handleSubmit = async (values: CampaignPayload) => {
+export const CandidateForm = ({ onClose, idCampaign, candidate }: Params) => {
+  const handleSubmit = async (values: CandidatePayload) => {
     try {
-      if (idCampaign) {
-        await updateCampaign(idCampaign, values);
+      if (candidate) {
+        await updateCandidate(candidate.candidateid, values);
         toast.success("Campaña modificada exitosamente");
       } else {
-        await createCampaign(values);
+        await createCandidate(values);
         toast.success("Campaña creada exitosamente");
       }
 
@@ -54,22 +53,26 @@ export const CampaignForm = ({ onClose, idCampaign }: Params) => {
   return (
     <>
       <Formik
-        initialValues={{ title: "", description: "", isvotingenabled: true }}
-        validationSchema={CampaignSchema}
+        initialValues={{
+          fullname: "",
+          description: "",
+          campaignid: +idCampaign!,
+        }}
+        validationSchema={CandidateSchema}
         onSubmit={handleSubmit}
       >
         {({ setValues }) => {
           useEffect(() => {
             setValues({
-              title: "",
+              fullname: "",
               description: "",
-              isvotingenabled: true,
+              campaignid: +idCampaign!,
             });
 
-            if (!idCampaign) return;
+            if (!candidate) return;
 
             loadCampaignInfo(setValues);
-          }, [idCampaign, setValues]);
+          }, [setValues]);
           return (
             <Form>
               <ModalHeader className="flex flex-col gap-1">
@@ -78,7 +81,7 @@ export const CampaignForm = ({ onClose, idCampaign }: Params) => {
               </ModalHeader>
               <ModalBody>
                 <div className="space-y-2">
-                  <InputField name="title" type="text" label="Titulo" />
+                  <InputField name="fullname" type="text" label="Nombre" />
                 </div>
 
                 <div className="space-y-2">
@@ -88,36 +91,6 @@ export const CampaignForm = ({ onClose, idCampaign }: Params) => {
                     label="Descripción"
                   />
                 </div>
-
-                {idCampaign && (
-                  <Field name="isvotingenabled">
-                    {({
-                      field,
-                      form: { setFieldValue },
-                    }: {
-                      field: {
-                        name: string;
-                        value: any;
-                      };
-                      form: {
-                        setFieldValue: (
-                          field: string,
-                          value: any,
-                          shouldValidate?: boolean
-                        ) => void;
-                      };
-                    }) => (
-                      <Button
-                        onClick={() => setFieldValue(field.name, !field.value)}
-                        color={field.value ? "danger" : "success"}
-                        className="w-full"
-                        type="button"
-                      >
-                        {field.value ? "Cerrar votaciones" : "Abrir votaciones"}
-                      </Button>
-                    )}
-                  </Field>
-                )}
               </ModalBody>
               <ModalFooter>
                 <Button

@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { SignInPage } from "../pages/auth/sign-in/sign-in";
 import { SignUpPage } from "../pages/auth/sign-up/SignUpPage";
+import { CampaignPage } from "../pages/campaign/campaign/CampaignPage";
 import { CampaignsListPage } from "../pages/campaign/campaigns-list/CampaignsListPage";
 import { Root } from "./root";
 
@@ -14,8 +15,9 @@ export const AppRouter = () => {
       <Route path="/" element={<Root />}>
         {isLogged ? (
           <>
-            <Route path="/" element={<CampaignsListPage />} />
-            <Route path="*" element={<Navigate to="/" />} />
+            <Route path="/campaign/:id" element={<CampaignPage />} />
+            <Route path="/campaign" element={<CampaignsListPage />} />
+            <Route path="*" element={<Navigate to="/campaign" />} />
           </>
         ) : (
           <>
@@ -24,6 +26,16 @@ export const AppRouter = () => {
             <Route path="*" element={<Navigate to="/auth/sign-in" />} />
           </>
         )}
+        <Route
+          path="*"
+          element={
+            isLogged ? (
+              <Navigate to="/campaign" />
+            ) : (
+              <Navigate to="/auth/sign-in" />
+            )
+          }
+        />
       </Route>
     </Routes>
   );

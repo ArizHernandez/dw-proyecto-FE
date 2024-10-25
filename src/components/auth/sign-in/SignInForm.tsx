@@ -1,14 +1,13 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { getLocalTimeZone, now } from "@internationalized/date";
 import { Button } from "@nextui-org/button";
 import { Form, Formik } from "formik";
 
 import { toast } from "react-toastify";
+import { useAuth } from "../../../hooks/useAuth";
 import { loginUser } from "../../../services/sign-in-service";
 import { DatePickerField, InputField } from "../../../ui";
 import { SignInFormPayload, SignInPayload } from "./interfaces/sign-in-form";
 import { SignInSchema } from "./utilities/form-validation";
-import { useAuth } from "../../../hooks/useAuth";
 
 export const SignInForm = () => {
   const { login } = useAuth();

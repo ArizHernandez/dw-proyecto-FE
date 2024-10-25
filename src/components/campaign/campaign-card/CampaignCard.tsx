@@ -29,7 +29,7 @@ export const CampaignCard = ({
   };
 
   return (
-    <div onClick={onClick}>
+    <div onClick={onClick} className="cursor-pointer">
       <Card className="py-2">
         <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
           <div className="flex flex-row justify-between w-full">
@@ -58,7 +58,7 @@ export const CampaignCard = ({
         <CardBody className="overflow-visible py-2">
           <Image
             alt="Card background"
-            className="object-contain rounded-xl"
+            className="object-cover rounded-xl"
             src="https://pbc712.org/wp-content/uploads/2020/08/vote-for-blog.jpg"
             width="100%"
           />

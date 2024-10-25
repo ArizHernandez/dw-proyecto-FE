@@ -39,7 +39,7 @@ export const Root = () => {
             className="sm:hidden"
           />
           <NavbarBrand>
-            <Link to="/">
+            <Link to="/campaign">
               V<span className="font-bold text-inherit">ING</span>
             </Link>
           </NavbarBrand>

@@ -23,8 +23,8 @@ export const Root = () => {
             className="sm:hidden"
           />
           <NavbarBrand>
-            <div>IMG</div>
-            <p className="font-bold text-inherit">ACME</p>
+            <div>V</div>
+            <p className="font-bold text-inherit">ING</p>
           </NavbarBrand>
         </NavbarContent>
 

@@ -2,26 +2,30 @@ import { getLocalTimeZone, now } from "@internationalized/date";
 import { Button } from "@nextui-org/button";
 import { Form, Formik } from "formik";
 
-import { DatePickerField, InputField } from "../../../ui";
-import { SignUpFormPayload, SignUpPayload } from "./interfaces/signup-form";
-import { SignInSchema } from "./utilities/form-validation";
 import { toast } from "react-toastify";
-import { signUpNewUser } from "../../../services/sign-up-service";
+import { loginUser } from "../../../services/sign-in-service";
+import { DatePickerField, InputField } from "../../../ui";
+import { SignInFormPayload, SignInPayload } from "./interfaces/sign-in-form";
+import { SignInSchema } from "./utilities/form-validation";
+import { useAuth } from "../../../hooks/useAuth";
 
-export const SignUpForm = () => {
-  const handleSubmit = async (values: SignUpFormPayload) => {
-    const { confirmPassword, ...rest } = values;
+export const SignInForm = () => {
+  const { login } = useAuth();
 
-    const payload: SignUpPayload = {
-      ...rest,
+  const handleSubmit = async (values: SignInFormPayload) => {
+    const payload: SignInPayload = {
+      ...values,
       birthdate: new Date(values.birthdate.toDate("UTC")).toISOString(),
     };
 
     try {
-      await signUpNewUser(payload);
+      const response = await loginUser(payload);
       toast.success("Usuario registrado exitosamente");
+
+      const { token } = response.data;
+      login(token);
     } catch (error: any) {
-      toast.error(error.message);
+      toast.error(error?.response?.data?.message ?? error.message);
     }
   };
 
@@ -29,12 +33,9 @@ export const SignUpForm = () => {
     <Formik
       initialValues={{
         registrationnumber: "",
-        fullname: "",
-        email: "",
         dpi: "",
         birthdate: now(getLocalTimeZone()),
         password: "",
-        confirmPassword: "",
       }}
       validationSchema={SignInSchema}
       onSubmit={handleSubmit}
@@ -48,20 +49,6 @@ export const SignUpForm = () => {
           ></InputField>
         </div>
         <div className="space-y-2">
-          <InputField
-            name="fullname"
-            label="Nombre completo"
-            type="text"
-          ></InputField>
-        </div>
-        <div className="space-y-2">
-          <InputField
-            name="email"
-            label="Correo electrónico"
-            type="email"
-          ></InputField>
-        </div>
-        <div className="space-y-2">
           <InputField name="dpi" label="DPI" type="number"></InputField>
         </div>
         <div className="space-y-2">
@@ -71,13 +58,6 @@ export const SignUpForm = () => {
           <InputField
             name="password"
             label="Contraseña"
-            type="password"
-          ></InputField>
-        </div>
-        <div className="space-y-2">
-          <InputField
-            name="confirmPassword"
-            label="Confirmar contraseña"
             type="password"
           ></InputField>
         </div>

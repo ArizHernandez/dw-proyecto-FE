@@ -1,16 +1,31 @@
-import { RouterProvider } from "react-router-dom";
-
 import { NextUIProvider } from "@nextui-org/system";
 import { ToastContainer } from "react-toastify";
-import { router } from "./router/appRouter";
+
+import { BrowserRouter } from "react-router-dom";
+import { AppRouter } from "./router/appRouter";
 
 import "react-toastify/dist/ReactToastify.css";
+import { useAuth } from "./hooks/useAuth";
+import { useEffect } from "react";
+import { storage } from "./helper/storage";
 
 function App() {
+  const { login } = useAuth();
+
+  useEffect(() => {
+    const token = storage.getItem("token");
+
+    if (token) {
+      login(token);
+    }
+  }, []);
+
   return (
     <>
       <NextUIProvider>
-        <RouterProvider router={router} />
+        <BrowserRouter>
+          <AppRouter />
+        </BrowserRouter>
         <ToastContainer />
       </NextUIProvider>
     </>

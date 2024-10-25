@@ -6,7 +6,7 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/@nextui-org/theme/dist/components/(button|card|date-picker|input|navbar|table|ripple|spinner|calendar|date-input|popover|checkbox|spacer).js"
+    "./node_modules/@nextui-org/theme/dist/components/(button|card|chip|date-picker|image|input|modal|navbar|table|ripple|spinner|calendar|date-input|popover|checkbox|spacer).js"
   ],
   theme: {
     extend: {},

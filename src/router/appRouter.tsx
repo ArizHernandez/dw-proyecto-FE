@@ -3,7 +3,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { SignInPage } from "../pages/auth/sign-in/sign-in";
 import { SignUpPage } from "../pages/auth/sign-up/SignUpPage";
-import { VoteListPage } from "../pages/votes/vote-list/VoteListPage";
+import { CampaignsListPage } from "../pages/campaign/campaigns-list/CampaignsListPage";
 import { Root } from "./root";
 
 export const AppRouter = () => {
@@ -14,8 +14,8 @@ export const AppRouter = () => {
       <Route path="/" element={<Root />}>
         {isLogged ? (
           <>
-            <Route path="votes" element={<VoteListPage />} />
-            <Route path="*" element={<Navigate to="/votes" />} />
+            <Route path="/" element={<CampaignsListPage />} />
+            <Route path="*" element={<Navigate to="/" />} />
           </>
         ) : (
           <>

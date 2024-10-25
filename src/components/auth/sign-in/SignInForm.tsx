@@ -20,7 +20,7 @@ export const SignInForm = () => {
 
     try {
       const response = await loginUser(payload);
-      toast.success("Usuario registrado exitosamente");
+      toast.success("Inicio de sesión exitoso \n Bienvenido!!");
 
       const { token } = response.data;
       login(token);

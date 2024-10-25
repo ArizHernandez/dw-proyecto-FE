@@ -7,12 +7,20 @@ import {
   NavbarMenuToggle,
 } from "@nextui-org/navbar";
 import { useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
 export const Root = () => {
   const { isLogged, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+
+    navigate("/auth/sign-in");
+  };
 
   return (
     <>
@@ -23,19 +31,15 @@ export const Root = () => {
             className="sm:hidden"
           />
           <NavbarBrand>
-            <div>V</div>
-            <p className="font-bold text-inherit">ING</p>
+            <Link to="/">
+              V<span className="font-bold text-inherit">ING</span>
+            </Link>
           </NavbarBrand>
         </NavbarContent>
 
         {isLogged ? (
           <>
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
-              <NavbarItem>
-                <Link color="foreground" to="/votes">
-                  Votos
-                </Link>
-              </NavbarItem>
               <NavbarItem isActive>
                 <Link to="#" aria-current="page">
                   Customers
@@ -50,8 +54,8 @@ export const Root = () => {
 
             <NavbarContent justify="end">
               <NavbarItem>
-                <Button onClick={logout} color="primary" variant="flat">
-                  Sign Out
+                <Button onClick={handleLogout} color="primary" variant="flat">
+                  Cerrar sesión
                 </Button>
               </NavbarItem>
             </NavbarContent>

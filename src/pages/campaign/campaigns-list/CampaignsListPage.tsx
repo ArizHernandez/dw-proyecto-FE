@@ -50,7 +50,7 @@ export const CampaignsListPage = () => {
       )}
 
       {campaigns.length > 0 ? (
-        <div className="grid grid-cols-4 gap-3 mt-3">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-3 mt-3">
           {campaigns.map((campaign) => (
             <CampaignCard
               key={campaign.campaignid}

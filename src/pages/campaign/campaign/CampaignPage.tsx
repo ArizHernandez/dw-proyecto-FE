@@ -65,7 +65,7 @@ export const CampaignPage = () => {
   }, [loadCampaign]);
 
   return (
-    <section className="container mx-auto mb-2">
+    <section className="container px-2 md-px-0 mx-auto mb-2">
       <Button className="mb-4" onClick={() => navigate("/campaign")}>
         {"<"} Regresar
       </Button>
@@ -91,7 +91,7 @@ export const CampaignPage = () => {
         </div>
       )}
 
-      <div className="grid grid-cols-4 gap-4 mt-2">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-2">
         {campaign?.candidates.map((candidate) => (
           <CandidateCard
             key={candidate.candidateid}

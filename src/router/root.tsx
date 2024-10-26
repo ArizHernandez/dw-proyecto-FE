@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { Avatar, AvatarIcon } from "@nextui-org/avatar";
 import { Button } from "@nextui-org/button";
 import {
@@ -13,14 +11,12 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  NavbarMenuToggle,
 } from "@nextui-org/navbar";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
 export const Root = () => {
   const { isLogged, logout, user } = useAuth();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -32,12 +28,8 @@ export const Root = () => {
 
   return (
     <>
-      <Navbar onMenuOpenChange={setIsMenuOpen}>
+      <Navbar>
         <NavbarContent>
-          <NavbarMenuToggle
-            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-            className="sm:hidden"
-          />
           <NavbarBrand>
             <Link to="/campaign">
               V<span className="font-bold text-inherit">ING</span>

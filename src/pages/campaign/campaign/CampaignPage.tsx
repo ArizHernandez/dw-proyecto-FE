@@ -14,6 +14,9 @@ import {
 } from "../../../components/candidates/interfaces/candidate-by-campaign";
 import { getCandidatesByCampaign } from "../../../services/candidates";
 import { CandidateCard } from "../../../components/candidates/candidate-card/CandidateCard";
+import { sendVoteToCandidate } from "../../../services/vote";
+import { useAuth } from "../../../hooks/useAuth";
+import { AppRoles } from "../../../helper/app-roles";
 
 export const CampaignPage = () => {
   const [campaign, setCampaign] = useState<CandidateByCampaign | null>(null);
@@ -23,7 +26,19 @@ export const CampaignPage = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const navigate = useNavigate();
+  const { user } = useAuth();
   const { id } = useParams();
+
+  const voteToCandidate = async (candidateId: string) => {
+    try {
+      await sendVoteToCandidate({ candidateid: candidateId, campaignid: +id! });
+
+      toast.success("Voto realizado correctamente");
+      loadCampaign();
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message ?? error.message);
+    }
+  };
 
   const loadCampaign = useCallback(async () => {
     try {
@@ -70,21 +85,27 @@ export const CampaignPage = () => {
         </div>
       </div>
 
-      <div className="flex justify-end mt-2">
-        <Button onPress={onOpen}>Agregar candidato</Button>
-      </div>
+      {campaign?.isVotingEnabled && user?.rol === AppRoles.Admin && (
+        <div className="flex justify-end mt-2">
+          <Button onPress={onOpen}>Agregar candidato</Button>
+        </div>
+      )}
 
       <div className="grid grid-cols-4 gap-4 mt-2">
         {campaign?.candidates.map((candidate) => (
           <CandidateCard
             key={candidate.candidateid}
             name={candidate.fullName}
+            isVotingEnabled={campaign.isVotingEnabled}
             description={candidate.description}
             votes={candidate.votesCount}
             id={candidate.candidateid}
             onClick={() => {
               setCandidateSelected(candidate);
               onOpen();
+            }}
+            onVote={() => {
+              voteToCandidate(candidate.candidateid);
             }}
           />
         ))}

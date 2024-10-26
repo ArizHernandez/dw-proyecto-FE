@@ -12,6 +12,7 @@ type Props = {
   name: string;
   description: string;
   votes: number;
+  isVotingEnabled: boolean;
   onClick?: () => void;
   onVote?: () => void;
 };
@@ -19,6 +20,7 @@ type Props = {
 export const CandidateCard = ({
   name,
   description,
+  isVotingEnabled,
   onClick,
   onVote,
   votes,
@@ -64,17 +66,24 @@ export const CandidateCard = ({
           width="100%"
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-3 items-center">
+        <div
+          className={`
+            grid grid-cols-1  
+            ${isVotingEnabled ? "md:grid-cols-2" : ""} 
+            gap-2 mt-3 items-center`}
+        >
           <Chip
-            color="warning"
+            color="danger"
             variant="bordered"
             className="max-w-full text-center"
           >
             Votos: {votes}
           </Chip>
-          <Button color="primary" type="button" onClick={onVote}>
-            Votar
-          </Button>
+          {isVotingEnabled && (
+            <Button color="primary" type="button" onClick={onVote}>
+              Votar
+            </Button>
+          )}
         </div>
       </CardBody>
     </Card>

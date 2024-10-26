@@ -50,7 +50,7 @@ export const CampaignPage = () => {
   }, [loadCampaign]);
 
   return (
-    <section className="container mx-auto">
+    <section className="container mx-auto mb-2">
       <Button className="mb-4" onClick={() => navigate("/campaign")}>
         {"<"} Regresar
       </Button>
@@ -59,7 +59,7 @@ export const CampaignPage = () => {
           alt="Card background"
           className="object-cover rounded-xl"
           src="https://pbc712.org/wp-content/uploads/2020/08/vote-for-blog.jpg"
-          width="500"
+          width="450"
         />
         <div>
           <Chip color={campaign?.isVotingEnabled ? "success" : "danger"}>
@@ -74,7 +74,7 @@ export const CampaignPage = () => {
         <Button onPress={onOpen}>Agregar candidato</Button>
       </div>
 
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-4 gap-4 mt-2">
         {campaign?.candidates.map((candidate) => (
           <CandidateCard
             key={candidate.candidateid}
@@ -82,6 +82,10 @@ export const CampaignPage = () => {
             description={candidate.description}
             votes={candidate.votesCount}
             id={candidate.candidateid}
+            onClick={() => {
+              setCandidateSelected(candidate);
+              onOpen();
+            }}
           />
         ))}
       </div>

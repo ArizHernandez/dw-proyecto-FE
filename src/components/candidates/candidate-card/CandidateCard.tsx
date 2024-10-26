@@ -27,8 +27,8 @@ export const CandidateCard = ({
 
   const clickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    if (onVote) {
-      onVote();
+    if (onClick) {
+      onClick();
     }
   };
 
@@ -72,7 +72,7 @@ export const CandidateCard = ({
           >
             Votos: {votes}
           </Chip>
-          <Button color="primary" type="button" onClick={onClick}>
+          <Button color="primary" type="button" onClick={onVote}>
             Votar
           </Button>
         </div>

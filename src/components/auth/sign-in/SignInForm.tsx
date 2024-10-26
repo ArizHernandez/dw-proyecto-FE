@@ -62,7 +62,7 @@ export const SignInForm = () => {
           ></InputField>
         </div>
         <Button type="submit" color="primary" className="w-full">
-          Registrarse
+          Inciar sesión
         </Button>
       </Form>
     </Formik>

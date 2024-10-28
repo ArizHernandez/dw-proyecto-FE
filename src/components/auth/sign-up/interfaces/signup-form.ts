@@ -20,5 +20,5 @@ export interface SignUpFormPayload {
   dpi: string;
   birthdate: CalendarDate | CalendarDateTime | ZonedDateTime;
   password: string;
-  confirmPassword: string;
+  confirmPassword?: string;
 }

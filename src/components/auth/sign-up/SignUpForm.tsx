@@ -13,10 +13,10 @@ export const SignUpForm = () => {
   const { login } = useAuth();
 
   const handleSubmit = async (values: SignUpFormPayload) => {
-    const { _confirmPassword, ...rest } = values;
+    delete values.confirmPassword;
 
     const payload: SignUpPayload = {
-      ...rest,
+      ...values,
       birthdate: new Date(values.birthdate.toDate("UTC")).toISOString(),
     };
 
